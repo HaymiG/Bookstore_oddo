@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+
+    <!-- ✅ First: Define the Action -->
+    <record id="action_book_details_view" model="ir.actions.act_window">
+      <field name="name">Books</field>
+      <field name="res_model">book.details</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- ✅ Then: Define the Menu -->
+    <menuitem id="BookStore_main_menu" name="Book Store" sequence="10"/>
+    <menuitem id="book_details_menu" name="Books"
+              parent="BookStore_main_menu"
+              action="action_book_details_view"/>
+
+  </data>
+</odoo>

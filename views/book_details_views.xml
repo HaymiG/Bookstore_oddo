@@ -1,0 +1,67 @@
+<odoo>
+  <data noupdate="1">
+
+    <!-- Tree view for book.details -->
+    <record id="book_details_view_tree" model="ir.ui.view">
+      <field name="name">book.details.view.tree</field>
+      <field name="model">book.details</field>
+      <field name="arch" type="xml">
+        <tree string="Book Details Tree" colors="gray:is_archived==True;green:book_age&lt;=5;blue:book_age&gt;5 and book_age&lt;=10;red:book_age&gt;10">
+          <field name="title"/>
+          <field name="author"/>
+          <field name="publisher"/>
+          <field name="published_date"/>
+          <field name="book_age" readonly="1"/>
+          <field name="genre" widget="many2one_tags"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Form view for book.details -->
+    <record id="book_details_view_form" model="ir.ui.view">
+      <field name="name">book.details.view.form</field>
+      <field name="model">book.details</field>
+      <field name="arch" type="xml">
+        <form string="Book Details Form">
+          <sheet>
+            <group>
+              <group>
+                <field name="title"/>
+                <field name="author"/>
+                <field name="publisher"/>
+                <field name="published_date"/>
+                <field name="book_age" readonly="1"/>
+                <field name="genre" widget="many2one_tags"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Search view for book.details -->
+    <record id="book_details_view_search" model="ir.ui.view">
+      <field name="name">book.details.view.search</field>
+      <field name="model">book.details</field>
+      <field name="arch" type="xml">
+        <search string="Search Books">
+          <filter name="filter_romance" string="Romance" domain="[('genre.name', '=', 'Romance')]"/>
+          <filter name="filter_adventure" string="Adventure" domain="[('genre.name', '=', 'Adventure')]"/>
+          <filter name="filter_sci_fi" string="Sci-Fi" domain="[('genre.name', '=', 'Sci-Fi')]"/>
+          
+          <group expand="0" string="Group By">
+            <filter name="groupby_genre" string="Genre" context="{'group_by': 'genre'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <!-- Action to open book.details window -->
+    <record id="action_book_details_view" model="ir.actions.act_window">
+      <field name="name">Book Details</field>
+      <field name="res_model">book.details</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+  </data>
+</odoo>
