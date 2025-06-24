@@ -3,13 +3,12 @@
     'version': '1.0.0',
     'category': 'BookStore',
     'sequence': -100,
-    'summary': 'BookStore management system',
+    'summary': 'BookStore managment system',
     'description': """
-BookStore management system
+BookStore managment system
     """,
-    'author': 'haymanot', 
     'application': True,
-    'depends': [],
+    'depends': [ ],
     'data': [ 
         'security/ir.model.access.csv',
         'views/book_details_views.xml',
@@ -18,4 +17,5 @@ BookStore management system
     'demo': [],
     'installable': True,
     'license': 'LGPL-3',
+
 }
