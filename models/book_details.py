@@ -1,15 +1,17 @@
-from odoo import api, models, fields
+from odoo import api, fields, models
 from datetime import date
 
 class BookDetails(models.Model):
     _name = 'book.details'
     _description = 'Book Details'
 
-    title = fields.Char(string='Title' , required=True)
-    author = fields.Char(string='Author')
+    title = fields.Char(string='Title', required=True)
+    author = fields.Char(string='Author')  # simple char field
+    author_id = fields.Many2one('res.partner', string='Author (Partner)', domain=[('is_author', '=', True)])
+
     publisher = fields.Char(string='Publisher')
     published_date = fields.Date(string='Published Date')
-    book_age = fields.Integer(string='Book Age' , compute='_compute_book_age', store=True)
+    book_age = fields.Integer(string='Book Age', compute='_compute_book_age', store=True)
     genre = fields.Many2one('book.geners', string='Genre')
 
     @api.depends('published_date')
@@ -17,15 +19,17 @@ class BookDetails(models.Model):
         for record in self:
             if record.published_date:
                 record.book_age = date.today().year - record.published_date.year
-            
             else:
                 record.book_age = 0
 
 
 class BookGeners(models.Model):
     _name = 'book.geners'
-    _description = 'Book Geners'
+    _description = 'Book Genres'
 
-    name = fields.Char(string='Name' , required=True)
+    name = fields.Char(string='Name', required=True)
     description = fields.Text(string='Description')
     book_ids = fields.One2many('book.details', 'genre', string='Books')
+
+
+

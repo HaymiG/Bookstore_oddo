@@ -2,6 +2,7 @@
     'name': 'Book-Store',
     'version': '1.0.0',
     'category': 'BookStore',
+    'author': 'haymanot',
     'sequence': -100,
     'summary': 'BookStore managment system',
     'description': """

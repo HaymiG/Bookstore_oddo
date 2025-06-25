@@ -1,0 +1,6 @@
+<odoo>
+    <record id="model_genre_details" model="ir.model">
+        <field name="name">genre.details</field>
+        <field name="model">genre.details</field>
+    </record>
+</odoo>
