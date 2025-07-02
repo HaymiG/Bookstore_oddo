@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action to open Book list -->
+    <record id="action_book_details" model="ir.actions.act_window">
+        <field name="name">Books</field>
+        <field name="res_model">book.details</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_create">
+                Create a new book record.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu for Books -->
+    <menuitem id="menu_book_root" name="Bookstore"/>
+    <menuitem id="menu_book_details" name="Books" parent="menu_book_root" action="action_book_details"/>
+
+    <!-- Tree (list) view for books -->
+    <record id="view_book_tree" model="ir.ui.view">
+        <field name="name">book.details.tree</field>
+        <field name="model">book.details</field>
+        <field name="arch" type="xml">
+            <tree string="Books"
+                  decoration-success="book_age &lt; 1"
+                  decoration-info="book_age &gt;= 1 and book_age &lt;= 10"
+                  decoration-danger="book_age &gt; 10"
+                  decoration-muted="is_archived == True">
+                <field name="cover_image" widget="image" options="{'preview_image': 'cover_image'}"/>
+                <field name="title"/>
+                <field name="author_id"/>
+                <field name="publisher"/>
+                <field name="published_date"/>
+                <field name="book_age"/>
+                <field name="isbn"/>
+                <field name="stock_qty"/>
+                <field name="price"/>
+                <field name="is_archived"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view for books -->
+    <record id="view_book_form" model="ir.ui.view">
+        <field name="name">book.details.form</field>
+        <field name="model">book.details</field>
+        <field name="arch" type="xml">
+            <form string="Book Details">
+                <sheet>
+                    <group>
+                        <field name="title"/>
+                        <field name="author_id"/>
+                        <field name="publisher"/>
+                        <field name="published_date"/>
+                        <field name="book_age" readonly="1"/>
+                        <field name="isbn"/>
+                        <field name="stock_qty"/>
+                        <field name="price"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="genre_ids" widget="many2many_tags"/>
+                        <field name="cover_image" widget="image" options="{'preview_image': 'cover_image'}"/>
+                        <field name="is_archived"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                </div>
+                <footer>
+                    <button name="action_archive" string="Archive" type="object" class="btn-secondary"/>
+                    <button name="action_unarchive" string="Unarchive" type="object" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view -->
+    <record id="view_book_search" model="ir.ui.view">
+        <field name="name">book.details.search</field>
+        <field name="model">book.details</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="title"/>
+                <field name="author_id"/>
+                <field name="publisher"/>
+                
+                <filter string="Archived" name="archived" domain="[('is_archived', '=', True)]"/>
+                <filter string="Active" name="active" domain="[('is_archived', '=', False)]"/>
+                <filter string="Published in 2025" name="published_2025"
+                        domain="[('published_date', '&gt;=', '2025-01-01'), ('published_date', '&lt;=', '2025-12-31')]"/>
+
+                <group string="Group By">
+                    <filter string="By Genre" name="by_genre" context="{'group_by': 'genre_ids'}"/>
+                    <filter string="By Author" name="by_author" context="{'group_by': 'author_id'}"/>
+                    <filter string="By Publisher" name="by_publisher" context="{'group_by': 'publisher'}"/>
+                    <filter string="By Published Year" name="by_year" context="{'group_by': 'published_date:year'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

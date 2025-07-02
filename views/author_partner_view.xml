@@ -1,0 +1,12 @@
+<odoo>
+    <record id="view_partner_form_author" model="ir.ui.view">
+        <field name="name">res.partner.form.author</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="function" position="after">
+                <field name="author"/>
+            </field>
+        </field>
+    </record>
+</odoo>

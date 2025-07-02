@@ -1,0 +1,12 @@
+<menuitem id="menu_bookstore_reports"
+          name="Reports"
+          parent="bookstore.menu_root"
+          groups="bookstore.group_bookstore_manager" />
+
+<record id="action_author_wizard" model="ir.actions.act_window">
+    <field name="name">Author Wizard</field>
+    <field name="res_model">author.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="groups_id" eval="[(4, ref('bookstore.group_bookstore_manager'))]" />
+</record>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action to open Genre list -->
+    <record id="action_genre_details" model="ir.actions.act_window">
+        <field name="name">Genres</field>
+        <field name="res_model">genre.details</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_create">
+                Create a new genre.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu for Genres -->
+    <menuitem id="menu_genre_details" name="Genres" parent="menu_book_root" action="action_genre_details"/>
+
+    <!-- Tree (list) view for genres -->
+    <record id="view_genre_tree" model="ir.ui.view">
+        <field name="name">genre.details.tree</field>
+        <field name="model">genre.details</field>
+        <field name="arch" type="xml">
+            <tree string="Genres">
+                <field name="name"/>
+                <!-- If you expect many books, you might replace below with a count field -->
+                <field name="book_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view for genres -->
+    <record id="view_genre_form" model="ir.ui.view">
+        <field name="name">genre.details.form</field>
+        <field name="model">genre.details</field>
+        <field name="arch" type="xml">
+            <form string="Genre Details">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="book_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view for genres -->
+    <record id="view_genre_search" model="ir.ui.view">
+        <field name="name">genre.details.search</field>
+        <field name="model">genre.details</field>
+        <field name="arch" type="xml">
+            <search string="Search Genres">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_book_kanban" model="ir.ui.view">
+        <field name="name">book.details.kanban</field>
+        <field name="model">book.details</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column" default_group_by="publisher">
+                <field name="title"/>
+                <field name="author_id"/>
+                <field name="stock_qty"/>
+                <field name="book_age"/>
+                <field name="cover_image"/>
+                <field name="published_date"/>
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            
+                            <!-- Cover Image -->
+                            <div class="o_kanban_image">
+                                <img t-if="record.cover_image.raw_value"
+                                     t-att-src="'data:image/png;base64,' + record.cover_image.raw_value"
+                                     class="img img-fluid" style="max-height:150px; width:auto;"/>
+                            </div>
+
+                            <!-- Title & Author -->
+                            <div class="oe_kanban_details mt-2">
+                                <strong><field name="title"/></strong>
+                                <div>By: <field name="author_id"/></div>
+                            </div>
+
+                            <!-- Stock and Low Stock Alert -->
+                            <div>
+                                <span>Stock: <field name="stock_qty"/></span>
+                                <span t-if="record.stock_qty.raw_value &lt; 5"
+                                      style="color: red; font-weight: bold;"> (Low Stock)</span>
+                            </div>
+
+                            <!-- Age Badge -->
+                            <t t-set="age" t-value="record.book_age.raw_value"/>
+                            <div t-if="age &lt;= 1" class="badge bg-success mt-1">New</div>
+                            <div t-if="age &gt; 1 and age &lt;= 5" class="badge bg-warning text-dark mt-1">Moderate</div>
+                            <div t-if="age &gt; 5" class="badge bg-danger mt-1">Old</div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>
